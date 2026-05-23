@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fahad Navas P K — IT Support Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --border: #1e1e2e;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --card: #0f0f18;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* GRID LINES */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 4rem;
+    padding-top: 80px;
+  }
+
+  .hero-content { max-width: 800px; }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 .name { color: var(--text); }
+  .hero h1 .accent { color: var(--accent); }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 540px;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 3rem;
+  }
+
+  .badge {
+    padding: 0.3rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    background: var(--surface);
+    transition: all 0.2s;
+  }
+
+  .badge:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 0.8rem 1.8rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    font-weight: 700;
+  }
+
+  .btn-primary:hover {
+    background: #00b8cc;
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    position: absolute;
+    right: 4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 340px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    line-height: 1.8;
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    background: var(--card);
+    border-radius: 4px;
+    opacity: 0.7;
+  }
+
+  .hero-visual .line-num { color: var(--border); margin-right: 1rem; }
+  .hero-visual .kw { color: var(--accent2); }
+  .hero-visual .str { color: var(--accent); }
+  .hero-visual .fn { color: #f59e0b; }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 4rem;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 3.5rem;
+    line-height: 1.1;
+  }
+
+  /* PROJECTS GRID */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .project-card {
+    background: var(--card);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.4s ease;
+  }
+
+  .project-card:hover::before { height: 100%; }
+  .project-card:hover { background: #0d0d18; }
+
+  .project-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--border);
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-icon {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.3s;
+  }
+
+  .project-card:hover .project-icon { border-color: var(--accent); }
+
+  .project-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .project-card p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .project-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    padding: 0.2rem 0.6rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    border-radius: 2px;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-group {
+    border: 1px solid var(--border);
+    padding: 2rem;
+    background: var(--card);
+    border-radius: 2px;
+    transition: border-color 0.3s;
+  }
+
+  .skill-group:hover { border-color: var(--accent); }
+
+  .skill-group-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-item {
+    font-size: 0.82rem;
+    color: var(--text);
+    padding: 0.25rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background: var(--surface);
+    transition: all 0.2s;
+  }
+
+  .skill-item:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+
+  .about-text p strong { color: var(--text); }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .stat-box {
+    background: var(--card);
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.08em;
+  }
+
+  /* CONTACT */
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-info h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .contact-info p {
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-link:hover { color: var(--accent); }
+
+  .contact-link-icon {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    font-size: 0.9rem;
+  }
+
+  .contact-highlight {
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    background: var(--card);
+    border-radius: 2px;
+  }
+
+  .contact-highlight h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .highlight-items { display: flex; flex-direction: column; gap: 1rem; }
+
+  .highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .highlight-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag { animation: fadeUp 0.6s ease both; }
+  .hero h1 { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-desc { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-badges { animation: fadeUp 0.6s 0.3s ease both; }
+  .hero-cta { animation: fadeUp 0.6s 0.4s ease both; }
+  .hero-visual { animation: fadeUp 0.6s 0.5s ease both; }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 4rem;
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 1.5rem; padding-top: 80px; }
+    .hero-visual { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    .divider { margin: 0 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">FAHAD.DEV</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">IT Support Engineer · Bengaluru</div>
+    <h1>
+      <span class="name">Fahad<br>Navas</span><br>
+      <span class="accent">P K</span>
+    </h1>
+    <p class="hero-desc">
+      B.Tech ECE graduate specialising in Windows OS troubleshooting, Active Directory, helpdesk operations, and end-user support. Immediate joiner. Open to pan-India and UAE.
+    </p>
+    <div class="hero-badges">
+      <span class="badge">osTicket</span>
+      <span class="badge">ServiceNow</span>
+      <span class="badge">Active Directory</span>
+      <span class="badge">Microsoft 365</span>
+      <span class="badge">ITIL Aware</span>
+      <span class="badge">AnyDesk · RDP</span>
+      <span class="badge">CCNA (In Progress)</span>
+    </div>
+    <div class="hero-cta">
+      <a href="mailto:Fahadnavaspk@gmail.com" class="btn btn-primary">Hire Me</a>
+      <a href="#projects" class="btn btn-outline">View Projects</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div><span class="line-num">01</span><span class="kw">const</span> engineer = {</div>
+    <div><span class="line-num">02</span>  name: <span class="str">"Fahad Navas P K"</span>,</div>
+    <div><span class="line-num">03</span>  role: <span class="str">"IT Support Engineer"</span>,</div>
+    <div><span class="line-num">04</span>  location: <span class="str">"Bengaluru, IN"</span>,</div>
+    <div><span class="line-num">05</span>  available: <span class="str">true</span>,</div>
+    <div><span class="line-num">06</span>  skills: [</div>
+    <div><span class="line-num">07</span>    <span class="str">"Active Directory"</span>,</div>
+    <div><span class="line-num">08</span>    <span class="str">"osTicket"</span>,</div>
+    <div><span class="line-num">09</span>    <span class="str">"Windows Server"</span>,</div>
+    <div><span class="line-num">10</span>    <span class="str">"M365 Admin"</span>,</div>
+    <div><span class="line-num">11</span>  ],</div>
+    <div><span class="line-num">12</span>  <span class="fn">getHired</span>() {</div>
+    <div><span class="line-num">13</span>    <span class="kw">return</span> <span class="str">"Immediately"</span>;</div>
+    <div><span class="line-num">14</span>  }</div>
+    <div><span class="line-num">15</span>};</div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About Me</div>
+  <div class="section-title">Who I Am</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <strong>B.Tech Electronics & Communication Engineering</strong> graduate from APJ Abdul Kalam Technological University (December 2025), based in Bengaluru, Karnataka.</p>
+      <p>I build and break things in home labs — Active Directory domains, helpdesk systems, troubleshooting simulations — to gain real-world skills before stepping into the field.</p>
+      <p>I hold a <strong>NACTET Diploma in Cyber Security</strong>, completed an internship at <strong>Syneffo Solutions</strong>, and I'm currently pursuing <strong>CCNA</strong>. I'm an immediate joiner, open to relocate pan-India and to the UAE.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-box">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Lab Projects</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">AD Users Created</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Scenarios Resolved</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">L1/L2</div>
+        <div class="stat-label">Support Tier Ready</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Work</div>
+  <div class="section-title">Projects</div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-num">01 / 03</div>
+      <div class="project-icon">🎫</div>
+      <h3>Helpdesk Ticketing System Deployment</h3>
+      <p>Deployed osTicket on a LAMP stack (Apache, MySQL, PHP via XAMPP on Windows 10) simulating a production helpdesk. Configured SLA policies, ticket categories, canned responses, automated email notifications, and monitored CSAT metrics. Simulated full ticket lifecycle — triage, assignment, escalation, resolution — across L1 and L2 tiers with role-based access.</p>
+      <div class="project-tags">
+        <span class="project-tag">osTicket</span>
+        <span class="project-tag">LAMP Stack</span>
+        <span class="project-tag">XAMPP</span>
+        <span class="project-tag">SLA</span>
+        <span class="project-tag">CSAT</span>
+        <span class="project-tag">L1/L2</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">02 / 03</div>
+      <div class="project-icon">🖥️</div>
+      <h3>Active Directory & User Management Lab</h3>
+      <p>Built a Windows Server AD domain from scratch with domain-joined Windows 10/11 VMs. Created 50+ user accounts, OUs, and security groups. Practised GPO configuration, password resets, remote administration, and full user lifecycle management from onboarding to offboarding.</p>
+      <div class="project-tags">
+        <span class="project-tag">Windows Server 2019</span>
+        <span class="project-tag">Active Directory</span>
+        <span class="project-tag">GPO</span>
+        <span class="project-tag">VirtualBox</span>
+        <span class="project-tag">RDP</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">03 / 03</div>
+      <div class="project-icon">🔧</div>
+      <h3>Tier 1 Troubleshooting Simulation Lab</h3>
+      <p>Simulated 10+ real-world IT support scenarios including network drops, login failures, Outlook errors, and printer issues using structured root-cause methodology. Produced ITIL-aligned ticket documentation for each scenario using ping, traceroute, ipconfig, nslookup, and Event Viewer.</p>
+      <div class="project-tags">
+        <span class="project-tag">Windows 10 VM</span>
+        <span class="project-tag">Linux CLI</span>
+        <span class="project-tag">ITIL</span>
+        <span class="project-tag">nslookup</span>
+        <span class="project-tag">Event Viewer</span>
+        <span class="project-tag">Root Cause Analysis</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Capabilities</div>
+  <div class="section-title">Technical Skills</div>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">Operating Systems</div>
+      <div class="skill-list">
+        <span class="skill-item">Windows 10/11</span>
+        <span class="skill-item">Windows Server 2019</span>
+        <span class="skill-item">Ubuntu Linux</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Networking</div>
+      <div class="skill-list">
+        <span class="skill-item">TCP/IP</span>
+        <span class="skill-item">DNS</span>
+        <span class="skill-item">DHCP</span>
+        <span class="skill-item">IP Addressing</span>
+        <span class="skill-item">VPN</span>
+        <span class="skill-item">ping / traceroute</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Remote & Support Tools</div>
+      <div class="skill-list">
+        <span class="skill-item">RDP</span>
+        <span class="skill-item">AnyDesk</span>
+        <span class="skill-item">TeamViewer</span>
+        <span class="skill-item">osTicket</span>
+        <span class="skill-item">ServiceNow</span>
+        <span class="skill-item">Freshdesk</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Active Directory</div>
+      <div class="skill-list">
+        <span class="skill-item">User Management</span>
+        <span class="skill-item">OUs & Groups</span>
+        <span class="skill-item">GPO</span>
+        <span class="skill-item">Password Resets</span>
+        <span class="skill-item">Domain Join</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Cloud & Productivity</div>
+      <div class="skill-list">
+        <span class="skill-item">Microsoft 365</span>
+        <span class="skill-item">Azure AD (Basic)</span>
+        <span class="skill-item">Google Workspace</span>
+        <span class="skill-item">Outlook / PST</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Hardware & Desktop</div>
+      <div class="skill-list">
+        <span class="skill-item">Printer Setup</span>
+        <span class="skill-item">System Assembly</span>
+        <span class="skill-item">Peripheral Config</span>
+        <span class="skill-item">Windows Troubleshooting</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Get In Touch</div>
+  <div class="section-title">Contact</div>
+  <div class="contact-inner">
+    <div class="contact-info">
+      <h3>Open to opportunities.</h3>
+      <p>Available immediately for IT Support, Help Desk, and System Administrator roles across India and UAE. Willing to relocate.</p>
+      <div class="contact-links">
+        <a href="mailto:Fahadnavaspk@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉</span>
+          Fahadnavaspk@gmail.com
+        </a>
+        <a href="tel:+918078584412" class="contact-link">
+          <span class="contact-link-icon">📞</span>
+          +91 8078584412
+        </a>
+        <a href="https://linkedin.com/in/fahad-p-k-00a918205" target="_blank" class="contact-link">
+          <span class="contact-link-icon">in</span>
+          linkedin.com/in/fahad-p-k-00a918205
+        </a>
+      </div>
+    </div>
+    <div class="contact-highlight">
+      <h4>Quick Facts</h4>
+      <div class="highlight-items">
+        <div class="highlight-item"><span class="highlight-dot"></span>Immediate Joiner</div>
+        <div class="highlight-item"><span class="highlight-dot"></span>Open to Pan-India Relocation</div>
+        <div class="highlight-item"><span class="highlight-dot"></span>Open to UAE Relocation</div>
+        <div class="highlight-item"><span class="highlight-dot"></span>B.Tech ECE — Dec 2025</div>
+        <div class="highlight-item"><span class="highlight-dot"></span>NACTET Diploma — Cyber Security</div>
+        <div class="highlight-item"><span class="highlight-dot"></span>CCNA In Progress</div>
+        <div class="highlight-item"><span class="highlight-dot"></span>Internship — Syneffo Solutions</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Fahad Navas P K</span>
+  <span>IT Support Engineer · Bengaluru, Karnataka</span>
+</footer>
+
+</body>
+</html>
